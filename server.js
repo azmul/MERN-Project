@@ -9,6 +9,10 @@ import posts from './routes/api/posts';
 
 const app = express();
 
+// Body Parser middleware
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
 // DB config
 const dbUrl = keys.dbUrl;
 mongoose
