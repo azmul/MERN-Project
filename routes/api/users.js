@@ -2,6 +2,9 @@ import express from 'express';
 import User from '../../models/User';
 import gravatar from 'gravatar';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import keys from '../../config/dev';
+import passport from 'passport';
 
 const router = express.Router();
 
@@ -58,11 +61,32 @@ router.post('/login', (req, res)=>{
         bcrypt.compare(password, user.password)
               .then(isMatch =>{
                   if(isMatch){
-                      res.json({msg: 'success'})
+                      // User match
+                      const payload = {id: user._id, name: user.name, avatar: user.avatar};
+                      // sign token
+                      jwt.sign(payload, keys.secretOrkey, {expiresIn: 3600}, (err, token)=>{
+                         if(err) throw err;
+                         res.json({
+                             success: true,
+                             token: `Bearer ${token}`
+                         })
+                      })
                   }else{
                       res.status(400).json({password: 'password not correct'});
                   }
               })
     })
 })
+
+// @route  GET /api/users/current
+// @desc   Return current user
+// @route  private
+
+router.get('/current', 
+    passport.authenticate('jwt',{session: false}),
+    (req, res)=>{
+        const { date, _id, name, email, avatar } = req.user;
+        res.json( { date, _id, name, email, avatar });
+    }
+)
 module.exports = router;
