@@ -5,6 +5,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import keys from '../../config/dev';
 import passport from 'passport';
+import validateRegisterInput from '../../validations/register';
+import validateLoginInput from '../../validations/login';
 
 const router = express.Router();
 
@@ -19,11 +21,19 @@ router.get('/test',(req,res)=>{
 // @desc   User register route
 // @route  public
 router.post('/register',(req,res)=>{
+    
+    const {errors, isValid} = validateRegisterInput(req.body);
+
+    // Check validation
+    if(!isValid){
+        return res.status(400).json(errors);
+    }
     const email = req.body.email;
     User.findOne({email: email})
        .then(user =>{
            if(user){
-               res.status(400).json({email:"Email already exits"})
+               errors.email = "Email already exits";
+               res.status(400).json(errors)
            }else{
                const avatar = gravatar.url(req.body.email, {s: '200', r: 'x', d: 'retro'}, true);
                const newUser = User({
@@ -51,6 +61,12 @@ router.post('/register',(req,res)=>{
 // @route  public
 
 router.post('/login', (req, res)=>{
+
+    const {errors,isValid} = validateLoginInput(req.body);
+    // Check validation
+    if(!isValid){
+        return res.status(400).json(errors);
+    }
     const email = req.body.email;
     const password = req.body.password;
 

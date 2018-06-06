@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 const dbUrl = keys.dbUrl;
 mongoose
    .connect(dbUrl)
-   .then(()=>console.log("mongodb connected"))
+   .then(()=>console.log("DB Connected"))
    .catch(err => console.log(err));
 
 // Passport middleware
