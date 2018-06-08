@@ -7,9 +7,7 @@ const validateLoginInput = data =>{
    email = !isEmpty(email) ? email : errors.email = 'Email filed is required';
    password = !isEmpty(password) ? password : errors.password = 'Password filed is required';
    
-   if(validator.isEmail(email)){
-       errors.email = 'Email is valid';
-   }else{
+   if(!validator.isEmail(email)){
        errors.email = 'Email is not valid';
    }
    if(!validator.isLength(password,{min:6,max:30})){

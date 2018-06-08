@@ -12,9 +12,7 @@ const validateRegisterInput = data =>{
    if(!validator.isLength(name ,{min:2, max:50})){
        errors.name = 'Name must be between 2 and 50 characters';
    } 
-   if(validator.isEmail(email)){
-       errors.email = 'Email is valid';
-   }else{
+   if(!validator.isEmail(email)){
        errors.email = 'Email is not valid';
    }
    if(!validator.isLength(password,{min:6,max:30})){
@@ -23,7 +21,7 @@ const validateRegisterInput = data =>{
    if(!validator.isLength(password2,{min:6,max:30})){
     errors.password2 = 'Password2 must be between 6 and 30 characters';
    }
-   if(validator.equals(password, password2)){
+   if(!validator.equals(password, password2)){
     errors.password2 = 'Passwords must match';
    }
 
