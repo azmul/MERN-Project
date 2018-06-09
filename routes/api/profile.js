@@ -38,7 +38,7 @@ router.get('/', passport.authenticate('jwt',{session: false}),
 // @route  private
 router.post('/', passport.authenticate('jwt',{session: false}),
     (req,res)=>{
-        const profileFileds = {},errors = {};
+        const profileFileds = {};
         profileFileds.user = req.user.id;
 
         if(req.body.handle) profileFileds.handle = req.body.handle;
