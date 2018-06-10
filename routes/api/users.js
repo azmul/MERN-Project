@@ -1,10 +1,11 @@
 import express from 'express';
-import User from '../../models/User';
 import gravatar from 'gravatar';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import keys from '../../config/dev';
 import passport from 'passport';
+
+import keys from '../../config/dev';
+import User from '../../models/User';
 import validateRegisterInput from '../../validations/register';
 import validateLoginInput from '../../validations/login';
 
@@ -81,7 +82,7 @@ router.post('/login', (req, res)=>{
                       // User match
                       const payload = {id: user._id, name: user.name, avatar: user.avatar};
                       // sign token
-                      jwt.sign(payload, keys.secretOrkey, {expiresIn: 3600}, (err, token)=>{
+                      jwt.sign(payload, keys.secretOrkey, {expiresIn: keys.tokenExpireDate}, (err, token)=>{
                          if(err) throw err;
                          res.json({
                              success: true,
