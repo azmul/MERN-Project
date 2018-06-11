@@ -15,7 +15,7 @@ class App extends Component {
        <Aux>
          <div className="ui container">
            <Navbar />
-           {Routes}
+              {Routes}
            <Landing />
            <Footer />
          </div>

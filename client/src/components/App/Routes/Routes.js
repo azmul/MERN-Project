@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import Home from '../Home/Home';
+import Landing from '../Layout/Landing/Landing';
 
 const Routes = (
     <div>
-        <Route path="/" exact strict component={Home} />
+        <Route path="/" exact strict component={Landing} />
     </div>
 )
 
