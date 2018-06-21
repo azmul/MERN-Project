@@ -8,7 +8,7 @@ import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
 
 import store from './redux/store';
-axios.defaults.baseURL = '';
+axios.defaults.baseURL = 'http://localhost:5000/';
 
 ReactDOM.render(
     <Provider store={store}>

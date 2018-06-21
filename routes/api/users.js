@@ -18,13 +18,11 @@ router.get('/test',(req,res)=>{
     res.json({msg:"users"});
 })
 
-// @route  GET /api/users/register
+// @route  POST /api/users/register
 // @desc   User register route
 // @route  public
 router.post('/register',(req,res)=>{
-    
     const {errors, isValid} = validateRegisterInput(req.body);
-
     // Check validation
     if(!isValid){
         return res.status(400).json(errors);
@@ -34,7 +32,7 @@ router.post('/register',(req,res)=>{
        .then(user =>{
            if(user){
                errors.email = "Email already exits";
-               res.status(400).json(errors)
+               res.status(400).json(errors);
            }else{
                const avatar = gravatar.url(req.body.email, {s: '200', r: 'x', d: 'retro'}, true);
                const newUser = User({
@@ -43,7 +41,6 @@ router.post('/register',(req,res)=>{
                    avatar,
                    password: req.body.password
                })
-
                bcrypt.genSalt(10, (err, salt)=>{
                    bcrypt.hash(newUser.password, salt, (err, hash)=>{
                        if(err) throw err;

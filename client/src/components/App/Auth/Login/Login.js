@@ -3,24 +3,62 @@ import React, { Component } from 'react';
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {  };
+        this.state = { 
+            email: '',
+            password: '',
+            errors:{
+            }
+         };
     }
+
+    submitHandelar = (event)=>{
+        event.preventDefault();
+        const {email,password} = this.state;
+        const user = {
+            email: email,
+            password: password
+        }
+        
+    }
+
+    handleInputChange =(event)=> {
+        event.preventDefault();
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+          [name]: value
+        });
+    }
+
     render() {
+        const {email,password} = this.state;
         return (
-            <div class="login">
-                <div class="container">
-                <div class="row">
-                    <div class="col-md-8 m-auto">
-                    <h1 class="display-4 text-center">Log In</h1>
-                    <p class="lead text-center">Sign in to your DevConnector account</p>
-                    <form action="dashboard.html">
-                        <div class="form-group">
-                        <input type="email" class="form-control form-control-lg" placeholder="Email Address" name="email" />
+            <div className="login">
+                <div className="container">
+                <div className="row">
+                    <div className="col-md-8 m-auto">
+                    <h1 className="display-4 text-center">Log In</h1>
+                    <p className="lead text-center">Sign in to your DevConnector account</p>
+                    <form onSubmit={this.submitHandelar}>
+                        <div className="form-group">
+                        <input type="email" 
+                               className="form-control form-control-lg" 
+                               placeholder="Email Address" 
+                               name="email"  
+                               value={email}
+                               onChange={this.handleInputChange}/>
                         </div>
-                        <div class="form-group">
-                        <input type="password" class="form-control form-control-lg" placeholder="Password" name="password" />
+                        <div className="form-group">
+                        <input 
+                               type="password" 
+                               className="form-control form-control-lg" 
+                               placeholder="Password" 
+                               name="password"        
+                               value={password}
+                               onChange={this.handleInputChange}/>
                         </div>
-                        <input type="submit" class="btn btn-info btn-block mt-4" />
+                        <input type="submit" className="btn btn-info btn-block mt-4" />
                     </form>
                     </div>
                 </div>

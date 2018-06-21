@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import passport from 'passport';
+import cors from 'cors';
 
 import keys from './config/keys';
 import users from './routes/api/users';
@@ -11,6 +12,9 @@ import posts from './routes/api/posts';
 import {authenticate} from './config/passport';
 
 const app = express();
+
+// Cross origin check
+app.use(cors());
 
 // Body Parser middleware
 app.use(bodyParser.urlencoded({extended: false}));
