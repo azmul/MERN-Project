@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {NavLink} from 'react-router-dom';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 import './Landing.css';
 
@@ -7,6 +9,11 @@ class Landing extends Component {
     constructor(props) {
         super(props);
         this.state = {  };
+    }
+    componentDidMount = ()=>{
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/dashboard')
+        }
     }
     render() {
         return (
@@ -30,4 +37,12 @@ class Landing extends Component {
     }
 }
 
-export default Landing;
+Landing.propTypes = {
+    auth: PropTypes.func.isRequired
+}
+const mapStateToProps = ({auth}) =>{
+    return{
+        auth: auth
+    }
+}
+export default connect(mapStateToProps)(Landing);

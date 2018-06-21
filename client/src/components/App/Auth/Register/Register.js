@@ -18,6 +18,11 @@ class Register extends Component {
             errors:{}                
          };                      
     }
+    componentDidMount = ()=>{
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/dashboard')
+        }
+    }
     componentWillReceiveProps = (nextProps)=>{
        if(nextProps.errors){
            this.setState({errors: nextProps.errors})
@@ -47,12 +52,12 @@ class Register extends Component {
 
     render() {
         const {name,email,password,password2,errors} = this.state;
-        const {user} = this.props;
-
+        const {user} = this.props.auth;
+        console.log(errors);
+        
         return (
             <div className="register">
                 <div className="container">
-                {user.name ? (<div>{user.name}</div>):null}
                 <div className="row">
                     <div className="col-md-8 m-auto">
                     <h1 className="display-4 text-center">Sign Up</h1>
@@ -131,7 +136,7 @@ Register.propTypes = {
 
 const mapStateToProps = ({auth , errors}) =>{
     return{
-        user : auth.user,
+        auth : auth,
         errors: errors.errors
     }
 }
