@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {loginUser} from '../../../../redux/actions/authActions';
+import TextFiledGroup from '../../common/TextFiledGroup';
 
 class Login extends Component {
     constructor(props) {
@@ -52,7 +53,7 @@ class Login extends Component {
     render() {
         const {email,password, errors} = this.state;
         const {user} = this.props;
-        console.log(errors);
+
         return (
             <div className="login">
                 <div className="container">
@@ -61,25 +62,22 @@ class Login extends Component {
                     <h1 className="display-4 text-center">Log In</h1>
                     <p className="lead text-center">Sign in to your DevConnector account</p>
                     <form noValidate onSubmit={this.submitHandelar}>
-                        <div className="form-group">
-                        <input type="email" 
-                               className="form-control form-control-lg" 
-                               placeholder="Email Address" 
-                               name="email"  
-                               value={email}
-                               onChange={this.handleInputChange}/>
-                        </div>
-                        {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
-                        <div className="form-group">
-                        <input 
-                               type="password" 
-                               className="form-control form-control-lg" 
-                               placeholder="Password" 
-                               name="password"        
-                               value={password}
-                               onChange={this.handleInputChange}/>
-                        {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
-                        </div>
+                        <TextFiledGroup
+                            type="email"
+                            placeholder="Email Address"
+                            name="email"
+                            value={email}
+                            onChange={this.handleInputChange}
+                            error={errors.email}
+                        />
+                        <TextFiledGroup
+                            type="password"
+                            placeholder="Password"
+                            name="password"
+                            value={password}
+                            onChange={this.handleInputChange}
+                            error={errors.password}
+                        />
                         <input type="submit" className="btn btn-info btn-block mt-4" />
                     </form>
                     </div>

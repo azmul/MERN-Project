@@ -6,6 +6,7 @@ import store from '../../redux/store';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 import {setCurrentUser, logoutUser} from '../../redux/actions/authActions';
+import {clearCurrentProfile} from '../../redux/actions/profileActions';
 
 import Aux from './Hoc/Aux';
 import Routes from './Routes/Routes';
@@ -25,7 +26,8 @@ if(localStorage.jwtToken){
   if(decoded.exp < currentTime){
     // Logout User
     store.dispatch(logoutUser());
-    // TODO: Clear current profile
+    //Clear current profile
+    store.dispatch(clearCurrentProfile());
     // Redirect to login
     window.location.href = '/login';
   }
